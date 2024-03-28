@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido de Namoro</title>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        a{
+            text-decoration: none;
+        }
+
+        .box{
+    font-size: 20px;
+    color: white;
+    min-height: 80vh; 
+    width: 80%; 
+    max-width: 500px; 
+    border-radius: 10px;
+    background: #5f1f7b;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+
+        .buttons-container {
+            display: flex;
+            justify-content: space-around;
+            height: 50px;
+            width: 150px;
+        }
+
+        button{
+            height: 30px;
+            width: 50px;
+            background: white;
+            border-radius: 5px;
+            color: blue;
+            font-weight: 600;
+            align-items: center;
+        }
+
+        #confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00; /* Cor dos confetes */
+            opacity: 0;
+            pointer-events: none;
+            animation: fall 2s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotateZ(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotateZ(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Adiciona a classe "hidden" para ocultar a imagem inicialmente */
+        .hidden {
+            display: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="box">
+        <p>Mariana, você aceita namorar comigo?</p>
+        <!-- Adiciona a imagem com a classe "hidden" para ocultá-la -->
+        <img src="Foto1.jpg" alt="Foto de Mariana" style="width: 200px; height: 200px; border-radius: 50%; margin-bottom: 20px;" class="hidden">
+        <div class="buttons-container">
+            <button id="yes">
+                <a>Sim</a>
+            </button>
+            <button id="no">Não</button>
+        </div>
+
+    </div>
+    <div id="confetti-container"></div>
+
+    <script>
+        let buttonNao = document.getElementById('no');
+        let buttonSim = document.getElementById('yes');
+        let height = window.innerHeight - 50;
+        let width = window.innerWidth -50;
+
+        buttonNao.addEventListener('mouseover', function(){
+    const box = document.querySelector('.box');
+    const boxRect = box.getBoundingClientRect();
+    const buttonNaoRect = buttonNao.getBoundingClientRect();
+    
+    const maxX = boxRect.width - buttonNaoRect.width;
+    const maxY = boxRect.height - buttonNaoRect.height;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    buttonNao.style.position = "absolute";
+    buttonNao.style.top = `${randomY}px`;
+    buttonNao.style.left = `${randomX}px`;
+});
+
+
+        buttonSim.addEventListener('click', function(){
+            emitConfetti();
+            // Mostra a imagem ao clicar no botão "Sim"
+            document.querySelector('img').classList.remove('hidden');
+            alert('Agora você é minha pra sempre!');
+        });
+
+        function emitConfetti() {
+            const container = document.getElementById('confetti-container');
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                container.appendChild(confetti);
+            }
+        }
+    </script>
+
+</body>
+</html>
